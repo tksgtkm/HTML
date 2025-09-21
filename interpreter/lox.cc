@@ -5,6 +5,7 @@
 #include <vector>
 
 #include "error.h"
+#include "scanner.h"
 
 std::string readFile(std::string_view path) {
     std::ifstream file{path.data(), std::ios::in | std::ios::binary | std::ios::ate};
@@ -24,7 +25,12 @@ std::string readFile(std::string_view path) {
 }
 
 void run(std::string_view source) {
+    Scanner scanner{source};
+    std::vector<Token> tokens = scanner.scanTokens();
 
+    for (const Token& token : tokens) {
+        std::cout << token.toString() << "\n";
+    }
 }
 
 void runFile(std::string_view path) {
